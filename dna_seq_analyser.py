@@ -1,6 +1,19 @@
 class DNASequence:
     def __init__(self, sequence):
-        self.sequence = sequence
+        # DNA Sequence validation
+        # 1. Check String type
+        if not isinstance(sequence, str):
+            raise TypeError("Input value is not a string.")
+        
+        # 2. Check valid base
+        input_seq = sequence.upper().strip()
+        valid_bases = set("ATGCN")
+        invalid_bases = set(input_seq) - valid_bases
+
+        if len(invalid_bases) > 0:
+            raise ValueError(f"Invalid DNA base found. {', '.join(invalid_bases)}.")
+
+        self.sequence = input_seq
     
     def len(self):
         seq = self.sequence
@@ -34,11 +47,3 @@ class DNASequence:
     def reverse_complement(self):
         com_seq = self.complement()
         return com_seq[::-1]
-
-seq1 = DNASequence("ATGGCATTTA")
-
-print(seq1.len())
-print(seq1.gc_content())
-print(seq1.reverse())
-print(seq1.complement())
-print(seq1.reverse_complement())
