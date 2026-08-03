@@ -15,13 +15,16 @@ class DNASequence:
 
         self.sequence = input_seq
     
-    def len(self):
+    def length(self):
         seq = self.sequence
         return len(seq)
     
     def gc_content(self):
         seq = self.sequence
-        return seq.count("G") + seq.count("C")
+        gc_count = seq.count("G") + seq.count("C")
+        gc_percentage = ((gc_count/len(seq)) * 100)
+
+        return 
     
     def reverse(self):
         seq = self.sequence
@@ -39,8 +42,10 @@ class DNASequence:
                 com_seq += "A"
             elif nt == "G":
                 com_seq += "C"
-            else:
+            elif nt == "C":
                 com_seq += "G"
+            else:
+                com_seq += nt
         
         return com_seq
     
