@@ -22,9 +22,9 @@ class DNASequence:
     def gc_content(self):
         seq = self.sequence
         gc_count = seq.count("G") + seq.count("C")
-        gc_percentage = ((gc_count/len(seq)) * 100)
+        gc_percent = round((gc_count/len(seq) * 100), 2)
 
-        return 
+        return gc_percent
     
     def reverse(self):
         seq = self.sequence
