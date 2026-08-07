@@ -10,7 +10,7 @@ DNA Seq Analyser is a simple application for basic DNA sequence analysis. It acc
 
 ## Installation
 
-Download the binary for your operating system and run the application.
+Download the binary for your operating system and run the application. [Latest Build](https://github.com/saurav7007/dna_seq_analyser/releases/latest)
 
 ### Linux
 
