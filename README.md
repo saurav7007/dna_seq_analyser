@@ -17,6 +17,8 @@ Download the binary for your operating system and run the application.
 The application can be run directly after extraction. If you would like it to appear in your application menu with an icon, run the following commands:
 
 ```bash
+unzip DNASeq-Analyser-linux.zip
+
 mkdir -p ~/.dna-seq-analyser
 mv DNASeq-Analyser-linux/* ~/.dna-seq-analyser/
 
