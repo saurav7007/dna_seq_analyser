@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=DNA Seq Analyser
+Comment=Simple DNA sequence analysis tool
+Exec=/home/saurav/Downloads/DNASeq-Analyser-linux/dna_seq_analyser
+Icon=/home/saurav/Downloads/dna_seq_analyser-main/assets/icon.png
+Terminal=false
+Categories=Science;Education;
