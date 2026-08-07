@@ -1,5 +1,8 @@
 class DNASequence:
     def __init__(self, sequence):
+        # Convert Fasta file to single string
+        header, sequence = self.parse_fasta(sequence)
+        
         # DNA Sequence validation
         # 1. Check String type
         if not isinstance(sequence, str):
@@ -13,7 +16,23 @@ class DNASequence:
         if len(invalid_bases) > 0:
             raise ValueError(f"Invalid DNA base found. {', '.join(invalid_bases)}.")
 
+        self.header = header
         self.sequence = input_seq
+
+    def parse_fasta(self, sequence):
+        lines = sequence.strip().splitlines()
+
+        if not lines:
+            raise ValueError("Input is empty.")
+
+        if lines[0].startswith(">"):
+            header = lines[0].lstrip(">").strip()
+            sequence = "".join(line.strip() for line in lines[1:])
+        else:
+            header = "unnamed"
+            sequence = "".join(line.strip() for line in lines)
+
+        return header, sequence
     
     def length(self):
         seq = self.sequence

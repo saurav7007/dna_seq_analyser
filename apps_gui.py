@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 import dna_seq_analyser as da
 
 class AppGUI(tk.Tk):
@@ -6,7 +7,7 @@ class AppGUI(tk.Tk):
         super().__init__()
 
         self.title("DNA Sequence Analyser")
-        self.geometry("600x400")
+        self.geometry("600x420")
 
         self.sequence = None
 
@@ -23,13 +24,15 @@ class AppGUI(tk.Tk):
 
         self.label = tk.Label(
             self.input_frame,
-            text="Paste your DNA Sequence"
+            text="Paste your DNA Sequence",
+            font=("Arial", 12, "bold")
         )
         self.label.pack(pady=10)
 
-        self.entry = tk.Entry(
+        self.entry = tk.Text(
             self.input_frame,
-            width=40
+            height=15,
+            width=60
         )
         self.entry.pack(pady=10)
 
@@ -38,7 +41,14 @@ class AppGUI(tk.Tk):
             text="Submit",
             command=self.submit_sequence
         )
-        self.button.pack(pady=10)
+        self.button.pack(pady=5)
+
+        self.upload_button = tk.Button(
+            self.input_frame,
+            text="Upload FASTA",
+            command=self.upload_sequence
+        )
+        self.upload_button.pack(pady=5)
 
         self.result = tk.Label(
             self.input_frame,
@@ -158,15 +168,23 @@ class AppGUI(tk.Tk):
         )
 
 
-        self.analysis_result = tk.Label(
+        self.analysis_result = tk.Text(
             self.analysis_frame,
-            text=""
+            height=10,
+            width=60,
+            wrap="word",
+            bg="#f0f0f0",
+            relief="flat",
+            cursor="arrow"
         )
+        self.analysis_result.config(state="disabled")
         self.analysis_result.grid(
             row=5,
             column=0,
             columnspan=2,
-            pady=10
+            padx=10,
+            pady=10,
+            sticky="nsew"
         )
 
     def show_input_frame(self):
@@ -177,23 +195,22 @@ class AppGUI(tk.Tk):
     def show_analysis_frame(self):
 
         self.input_frame.pack_forget()
-        self.analysis_result.config(text="")
+        self.set_result_text("")
 
         self.analysis_frame.pack(fill="both", expand=True)
 
-    def submit_sequence(self):
+    def process_sequence(self, input_seq):
 
-        input_seq = self.entry.get()
-        
         try:
             self.sequence = da.DNASequence(input_seq)
+            self.header = self.sequence.header
 
             self.result.config(
                 text=""
             )
 
             self.sequence_label.config(
-                text=f"The Submitted DNA Sequence: {self.sequence.sequence}",
+                text=f"The Submitted DNA Sequence: {self.header}",
                 fg="green"
             )
             self.show_analysis_frame()
@@ -204,50 +221,62 @@ class AppGUI(tk.Tk):
                 fg="red"
             )
 
+    def submit_sequence(self):
+
+        input_seq = self.entry.get("1.0", tk.END)
+        self.process_sequence(input_seq)
+
+    def upload_sequence(self):
+
+        filepath = filedialog.askopenfilename(
+            filetypes=[("FASTA files", "*.fasta *.fa *.txt"), ("All files", "*.*")]
+        )
+        if not filepath:
+            return  # user cancelled the dialog
+
+        with open(filepath, "r") as f:
+            input_seq = f.read()
+
+        self.process_sequence(input_seq)
+
+    def set_result_text(self, text, color="green"):
+        self.analysis_result.config(state="normal")
+        self.analysis_result.delete("1.0", tk.END)
+        self.analysis_result.insert("1.0", text)
+        self.analysis_result.tag_add("colored", "1.0", tk.END)
+        self.analysis_result.tag_config("colored", foreground=color)
+        self.analysis_result.config(state="disabled")
+
     def show_length(self):
 
         length = self.sequence.length()
 
-        self.analysis_result.config(
-            text=f"Sequence Length: {length}",
-            fg="green"
-        )
+        self.set_result_text(f"Sequence Length: {length}")
 
     def show_gc_content(self):
 
         gc_content = self.sequence.gc_content()
 
-        self.analysis_result.config(
-            text=f"GC Content: {gc_content}%",
-            fg="green"
-    )
+        self.set_result_text(f"GC Content: {gc_content}%")
 
     def show_reverse(self):
 
         reverse = self.sequence.reverse()
 
-        self.analysis_result.config(
-            text=f"Reverse Sequence: {reverse}",
-            fg="green"
-    )
+        self.set_result_text(f"Reverse Sequence: {reverse}")
 
     def show_complement(self):
 
         complement = self.sequence.complement()
 
-        self.analysis_result.config(
-            text=f"Complement Sequence: {complement}",
-            fg="green"
-    )
+        self.set_result_text(f"Complement Sequence: {complement}")
 
     def show_reverse_complement(self):
 
         reverse_complement = self.sequence.reverse_complement()
 
-        self.analysis_result.config(
-            text=f"Reverse Complement: {reverse_complement}",
-            fg="green"
-    )   
+        self.set_result_text(f"Reverse Complement: {reverse_complement}")
+ 
 
 if __name__ == "__main__":
     app = AppGUI()
