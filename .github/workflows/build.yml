@@ -31,6 +31,18 @@ jobs:
           name: DNASeq-Analyser-linux
           path: dist/dna_seq_analyser
 
+      - name: Upload icon
+        uses: actions/upload-artifact@v4
+        with:
+          name: assets
+          path: assets/
+
+      - name: Upload test data
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-data
+          path: test_data/
+
   build-windows:
     runs-on: windows-latest
 
@@ -55,6 +67,12 @@ jobs:
           name: DNASeq-Analyser-windows
           path: dist/dna_seq_analyser.exe
 
+      - name: Upload test data
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-data
+          path: test_data/
+
   build-macos:
     runs-on: macos-latest
 
@@ -75,6 +93,12 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
+
+      - name: Upload test data
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-data
+          path: test_data/
         with:
           name: DNASeq-Analyser-macos
           path: dist/dna_seq_analyser
