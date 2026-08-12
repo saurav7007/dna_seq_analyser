@@ -32,6 +32,7 @@ jobs:
           cp -r assets release-bundle/
           cp -r test_data release-bundle/
           cp dna-seq-analyser.desktop release-bundle/
+          cp README.md release-bundle/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
