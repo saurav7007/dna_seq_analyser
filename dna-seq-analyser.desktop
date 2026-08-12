@@ -2,7 +2,7 @@
 Type=Application
 Name=DNA Seq Analyser
 Comment=Simple DNA sequence analysis tool
-Exec=~/.dna-seq-analyser/dna_seq_analyser
-Icon=~/.dna-seq-analyser/assets/icon.png
+Exec=/home/<username>/.dna-seq-analyser/dna_seq_analyser
+Icon=/home/<username>/.dna-seq-analyser/assets/icon.png
 Terminal=false
 Categories=Science;Education;
