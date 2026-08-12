@@ -22,6 +22,8 @@ unzip DNASeq-Analyser-linux.zip
 mkdir -p ~/.dna-seq-analyser
 mv DNASeq-Analyser-linux/* ~/.dna-seq-analyser/
 
+sed -i "s/username/${USER}/g" ~/.dna-seq-analyser/dna-seq-analyser.desktop
+
 ln -s ~/.dna-seq-analyser/dna-seq-analyser.desktop \
       ~/.local/share/applications/dna-seq-analyser.desktop
 ```
